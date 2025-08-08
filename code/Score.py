@@ -5,7 +5,7 @@ import pygame
 from pygame import Surface, Rect, KEYDOWN, K_RETURN, K_BACKSPACE, K_ESCAPE
 from pygame.font import Font
 
-from code.Const import C_YELLOW, SCORE_POS, C_CYAN
+from code.Const import C_YELLOW, SCORE_POS, C_WHITE, MENU_OPTION
 from code.DBProxy import DBProxy
 
 
@@ -17,7 +17,7 @@ class Score:
         pass
 
     def save(self, game_mode: str, player_score: list[int]):
-        pygame.mixer_music.load('./asset/Menu.wav')
+        pygame.mixer_music.load('./asset/Score.mp3')
         pygame.mixer_music.play(-1)
         db_proxy = DBProxy('DBScore')
         name = ''
@@ -26,7 +26,9 @@ class Score:
             self.score_text(48, 'VICTORY!', C_YELLOW, SCORE_POS['Title'])
             text = 'Player name (4 characters):'
             score = player_score[0]
-            self.score_text(20, text, C_CYAN, SCORE_POS['EnterName'])
+            if game_mode == MENU_OPTION[0]:
+                score = player_score[0]
+            self.score_text(20, text, C_WHITE, SCORE_POS['EnterName'])
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -42,12 +44,12 @@ class Score:
                     else:
                         if len(name) < 4:
                             name += event.unicode
-            self.score_text(20, name, C_CYAN, SCORE_POS['Name'])
+            self.score_text(20, name, C_WHITE, SCORE_POS['Name'])
             pygame.display.flip()
             pass
 
     def show(self):
-        pygame.mixer_music.load('./asset/Menu.wav')
+        pygame.mixer_music.load('./asset/Score.mp3')
         pygame.mixer_music.play(-1)
         self.window.blit(source=self.surf, dest=self.rect)
         self.score_text(48, 'TOP 10', C_YELLOW, SCORE_POS['Title'])

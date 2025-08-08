@@ -6,6 +6,7 @@ from code.Const import WIN_WIDTH, WIN_HEIGHT, MENU_OPTION
 from code.Level import Level
 from code.Menu import Menu
 from code.Score import Score
+from code.GameOver import GameOver
 
 
 class Game:
@@ -28,6 +29,9 @@ class Game:
                     level_return = level.run(player_score)
                     if level_return:
                         score.save(menu_return, player_score)
+                else:
+                    game_over = GameOver(self.window)
+                    game_over.run()
             elif menu_return == MENU_OPTION[1]:
                 score.show()
             elif menu_return == MENU_OPTION[2]:
